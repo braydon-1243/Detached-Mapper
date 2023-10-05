@@ -24,7 +24,7 @@ namespace Detached.Mappers.EntityFramework.TypeMappers
             LambdaExpression construct = builder.BuildNewExpression(typePair.TargetType);
             LambdaExpression getSourceKeyExpr;
             LambdaExpression getTargetKeyExpr;
-            LambdaExpression mapKeyMembers = builder.BuildMapMembersExpression(typePair, (s, t) => t.IsKey());
+            LambdaExpression mapKeyMembers = builder.BuildMapMembersExpression(typePair, (s, t) => t.IsKey() || t.IsBusinessKey());
             LambdaExpression mapNoKeyMembers;
 
             string concurrencyTokenName = typePair.TargetType.GetConcurrencyTokenName();
@@ -36,7 +36,7 @@ namespace Detached.Mappers.EntityFramework.TypeMappers
                 mapperType = typeof(CompositionEntityTypeMapper<,,>)
                     .MakeGenericType(typePair.SourceType.ClrType, typePair.TargetType.ClrType, keyType);
                  
-                mapNoKeyMembers = builder.BuildMapMembersExpression(typePair, (s, t) => !t.IsKey());
+                mapNoKeyMembers = builder.BuildMapMembersExpression(typePair, (s, t) => !t.IsKey() && !t.Name.Contains("Id") && !t.IsBusinessKey());
             }
             else
             {

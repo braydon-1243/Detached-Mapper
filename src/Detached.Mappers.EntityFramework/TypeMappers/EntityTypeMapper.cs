@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Detached.Mappers.EntityFramework.TypeMappers
 {
@@ -147,9 +149,15 @@ namespace Detached.Mappers.EntityFramework.TypeMappers
         {
             var stateManager = dbContext.GetService<IStateManager>();
             var entityType = dbContext.Model.FindEntityType(typeof(TTarget));
-            var keyType = entityType.FindPrimaryKey();
-            var internalEntry = stateManager.TryGetEntry(keyType, key.ToObject());
+            //var keyType = entityType.FindPrimaryKey();
 
+
+            //var internalEntry = stateManager.TryGetEntry(keyType, key.ToObject());
+
+            var alternatekeyType = entityType.GetKeys().Where(k => !k.IsPrimaryKey()).SingleOrDefault();
+
+            var internalEntry = stateManager.TryGetEntry(alternatekeyType, key.ToObject());
+                        
             if (internalEntry != null)
                 return new EntityEntry<TTarget>(internalEntry);
             else

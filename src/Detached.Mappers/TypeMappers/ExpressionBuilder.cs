@@ -35,8 +35,9 @@ namespace Detached.Mappers.TypeMappers
 
             foreach (TypePairMember pairMember in typePair.Members.Values)
             {
-                if (pairMember.IsKey())
-                {
+                //if (pairMember.IsKey())
+                if (pairMember.IsBusinessKey())
+                    {
                     keyParamTypes.Add(pairMember.TargetMember.ClrType);
                     Expression targetParamExpr = pairMember.TargetMember.BuildGetExpression(targetExpr, contextExpr);
                     targetParamExprList.Add(targetParamExpr);

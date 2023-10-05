@@ -72,7 +72,7 @@ namespace Detached.Mappers.EntityFramework.Loaders
 
             Expression expression = null;
 
-            foreach (TypePairMember memberPair in typePair.Members.Values.Where(p => p.IsKey()))
+            foreach (TypePairMember memberPair in typePair.Members.Values.Where(p => p.IsBusinessKey()))
             {
                 if (memberPair.IsIgnored())
                 {

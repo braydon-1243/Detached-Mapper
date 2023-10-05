@@ -91,6 +91,7 @@ namespace Detached.Mappers
             AnnotationHandlers = new Dictionary<Type, IAnnotationHandler>
             {
                 { typeof(KeyAttribute), new KeyAnnotationHandler() },
+                { typeof(BusinessKeyAttribute), new BusinessKeyAnnotationHandler() },
                 { typeof(AggregationAttribute), new AggregationAnnotationHandler() },
                 { typeof(CompositionAttribute), new CompositionAnnotationHandler() },
                 { typeof(EntityAttribute), new EntityAnnotationHandler() },
